@@ -3,7 +3,6 @@ import SimpleSchema from "simpl-schema";
 
 const BooksCollection = new Mongo.Collection("books");
 
-const Books = new Mongo.Collection("Books");
 BooksCollection.allow({
   insert: () => false,
   update: () => false,
@@ -43,20 +42,17 @@ const BooksSchema = new SimpleSchema({
     label: "The name of the author",
   },
 
-
-  "coverImage": {
+  coverImage: {
     type: String,
     label: "url for the book",
     optional: true,
   },
 
-
-  "bookurl": {
+  bookurl: {
     type: String,
     label: "url for the book",
     optional: true,
   },
-
 
   price: {
     type: Number,

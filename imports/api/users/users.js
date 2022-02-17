@@ -1,7 +1,7 @@
 import { Mongo } from "meteor/mongo";
 import { SimpleSchema } from "simpl-schema";
 
-export const UsersCollection = new Mongo.Collection("users");
+const UsersCollection = new Mongo.Collection("users");
 
 UsersCollection.allow({
   insert: () => false,

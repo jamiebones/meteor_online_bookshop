@@ -1,7 +1,7 @@
 import { Mongo } from "meteor/mongo";
 import { SimpleSchema } from "simpl-schema";
 
-export const BookSalesCollection = new Mongo.Collection("booksales");
+const BookSalesCollection = new Mongo.Collection("booksales");
 BookSalesCollection.allow({
   insert: () => false,
   update: () => false,
