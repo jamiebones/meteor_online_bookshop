@@ -1,31 +1,31 @@
-import { Mongo } from "meteor/mongo";
-import { SimpleSchema } from "simpl-schema";
+// import { Mongo } from "meteor/mongo";
+// import { SimpleSchema } from "simpl-schema";
 
-const UsersCollection = new Mongo.Collection("users");
+// const UsersCollection = new Mongo.Collection("users");
 
-UsersCollection.allow({
-  insert: () => false,
-  update: () => false,
-  remove: () => false,
-});
+// UsersCollection.allow({
+//   insert: () => false,
+//   update: () => false,
+//   remove: () => false,
+// });
 
-UsersCollection.deny({
-  insert: () => true,
-  update: () => true,
-  remove: () => true,
-});
+// UsersCollection.deny({
+//   insert: () => true,
+//   update: () => true,
+//   remove: () => true,
+// });
 
-const UsersSchema = new SimpleSchema({
-  email: String,
-  password: String,
-  name: String,
-  userType: String,
-  phoneNumber: {
-    type: String,
-    required: false,
-  },
-});
+// const UsersSchema = new SimpleSchema({
+//   email: String,
+//   password: String,
+//   name: String,
+//   userType: String,
+//   phoneNumber: {
+//     type: String,
+//     required: false,
+//   },
+// });
 
-UsersCollection.attachSchema(UsersSchema);
+// UsersCollection.attachSchema(UsersSchema);
 
-export default UsersCollection;
+// export default UsersCollection;
