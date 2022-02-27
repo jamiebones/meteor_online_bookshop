@@ -20,6 +20,7 @@ Meteor.methods({
       profile,
     });
     Roles.addUsersToRoles(id, ["user", "shopper"]);
+    Accounts.sendVerificationEmail(id);
     return id;
   },
 });

@@ -1,1 +1,11 @@
-{}
+{
+ "private" : {
+    "EmailSetup": {
+     "username" : "educativecourse147",
+     "password" : "blazing147",
+     "smtpServer" : "smtp.gmail.com",
+     "smtpPort" : "587"
+    }
+ }
+
+}

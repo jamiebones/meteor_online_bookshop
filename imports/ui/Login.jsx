@@ -4,19 +4,23 @@ import { Meteor } from "meteor/meteor";
 const Login = ({ authenticated }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
+  const [email, setEmail] = useState("");
 
   const loginUser = (e) => {
     e.preventDefault();
-    Meteor.loginWithPassword(username, password, (err) => {
-      if (err) {
-        alert(err.reason);
-      } else {
-        alert("Login successful");
-        setPassword("");
-        setUsername("");
+    Meteor.loginWithPassword(
+      email.trim(),
+      password,
+      (err) => {
+        if (err) {
+          alert(err.reason);
+        } else {
+          alert("Login successful");
+          setPassword("");
+          setUsername("");
+        }
       }
-    });
+    );
   };
 
   const logoutUser = () => {
@@ -37,6 +41,15 @@ const Login = ({ authenticated }) => {
                 type="text"
                 placeholder="Username"
                 onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+
+            <div className="div-input">
+              <span>Email </span>
+              <input
+                type="email"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
