@@ -59,71 +59,95 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      {error && (
-        <p style={{ color: "red", fontSize: 15 + "px", textAlign: "center" }}>
-          {error}
-        </p>
-      )}
-      <h1>SignUp</h1>
+    <div className="row">
+      <div className="col-md-6 offset-3">
+        {error && (
+          <p style={{ color: "red", fontSize: 15 + "px", textAlign: "center" }}>
+            {error}
+          </p>
+        )}
+        <h1 className="text-info">SignUp</h1>
+       <form onSubmit={signUpNewUser}>
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">
+            Username <span className="text-danger">*</span>
+          </label>
+          <input
+            type="text"
+            value={username}
+            placeholder="username"
+            name="username"
+            onChange={handleInputChange}
+            className="form-control"
+            id="username"
+          />
+        </div>
 
-      <div className="div-input">
-        <span>username *</span>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">
+            Email <span className="text-danger">*</span>
+          </label>
+          <input
+            value={email}
+            type="email"
+            placeholder="email"
+            name="email"
+            onChange={handleInputChange}
+            id="email"
+            className="form-control"
+          />
+        </div>
 
-        <input
-          type="text"
-          value={username}
-          placeholder="username"
-          name="username"
-          onChange={handleInputChange}
-        />
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Password <span className="text-danger">*</span>
+          </label>
+          <input
+            type="password"
+            placeholder="password"
+            value={password}
+            name="password"
+            onChange={handleInputChange}
+            id="password"
+            className="form-control"
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="phone" className="form-label">
+            Phone number
+          </label>
+          <input
+            value={phone}
+            type="text"
+            placeholder="phone number"
+            name="phone"
+            onChange={handleInputChange}
+            id="phone"
+            className="form-control"
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="address" className="form-label">
+            Address
+          </label>
+          <textarea
+            value={address}
+            type="text"
+            placeholder="address"
+            name="address"
+            onChange={handleInputChange}
+            id="phone"
+            className="form-control"
+          />
+        </div>
+
+        <button type="submit" className="btn btn-success">
+          Sign up
+        </button>
+        </form>
       </div>
-
-      <div className="div-input">
-        <span>email *</span>
-        <input
-        value={email}
-          type="email"
-          placeholder="email"
-          name="email"
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div className="div-input">
-        <span>password *</span>
-        <input
-          type="password"
-          placeholder="password"
-          value={password}
-          name="password"
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div className="div-input">
-        <span>phone number </span>
-        <input
-        value={phone}
-          type="text"
-          placeholder="phone number"
-          name="phone"
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <div className="div-input">
-        <span>address </span>
-        <input
-        value={address}
-          type="text"
-          placeholder="address"
-          name="address"
-          onChange={handleInputChange}
-        />
-      </div>
-
-      <button onClick={signUpNewUser}>Sign up</button>
     </div>
   );
 };

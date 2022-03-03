@@ -1,45 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { BookShop } from "./BookShop.jsx";
-import { useTracker } from "meteor/react-meteor-data";
-import { Roles } from "meteor/alanning:roles";
+
 import { Meteor } from "meteor/meteor";
-import Login from "./Login.jsx";
-import SignUp from "./SignUp.jsx";
-import AuthenticatedComponent from "./Authenticated.jsx";
+import { useTracker } from "meteor/react-meteor-data";
+import { Switch, Route, Redirect } from "react-router-dom";
+
 import { Accounts } from "meteor/accounts-base";
+
+import BookShop from "./BookShop.jsx";
+import SignUp from "./SignUp.jsx";
+import Login from "./Login.jsx";
+import ProtectedRoute from "./ProtectedRoute.jsx";
+import Dashboard from "./Dashboard.jsx";
+import Authorized from "./Authorized.jsx";
+import NotAuthorized from "./NotAuthorized.jsx";
 
 import "./app.css";
 
 export const App = () => {
-  const [loggingIn, setLoggin] = useState(false);
   const [user, setUser] = useState(null);
-  const [userId, setUserId] = useState(null);
-  const [roles, setRoles] = useState([]);
-  const [authenticated, setAuthenticated] = useState(false);
-
-  const handleLoginFunction = () => {
-    console.log("login function here ran ");
-    const loggingIn = Meteor.loggingIn();
-    const user = Meteor.user();
+  const { userId, roles, loggingIn, authenticated } = useTracker(() => {
     const userId = Meteor.userId();
     const roles = Meteor.roleAssignment
       .find({ "user._id": Meteor.userId() })
       .fetch();
-    const authenticated = !!Meteor.userId();
-    setLoggin(loggingIn);
-    setUser(user);
-    setUserId(userId);
-    setRoles(roles);
-    setAuthenticated(authenticated);
+    const authenticated = !!userId;
+    const loggingIn = Meteor.loggingIn();
+    return { userId, roles, authenticated, loggingIn };
+  }, [user]);
+
+  const handleLoginFunction = () => {
+    setUser(Meteor.user());
   };
 
   const handleLogoutFunction = () => {
-    console.log("logout ran here");
-    setLoggin(false);
-    setUser(null);
-    setUserId(null);
-    setRoles([]);
-    setAuthenticated(false);
+    setUser(Meteor.user());
   };
 
   useEffect(() => {
@@ -49,18 +43,60 @@ export const App = () => {
     Accounts.onLogout(() => {
       handleLogoutFunction();
     });
+
+    const url = window.location.pathname;
+    let verificationToken = url.split("/")[2];
+    if (verificationToken) {
+      Accounts.verifyEmail(verificationToken, (err) => {
+        if (err) {
+          alert(err.reason);
+        } else {
+          alert("email verified");
+        }
+      });
+    }
   }, []);
 
   return (
-    <div>
-      <BookShop />
-      <div className="login-container">
-        <div className="login">
-          <SignUp />
-          <Login authenticated={authenticated} />
-        </div>
-        <div className="auth-section">
-          <AuthenticatedComponent roles={roles} user={user} />
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-md-12">
+          <Switch>
+            <Route path="/" exact component={BookShop} />
+            <Route path="/sign-up" exact component={SignUp} />
+            <Route path="/not_authorized" exact component={NotAuthorized} />
+
+            <Route
+              path="/login"
+              exact
+              render={(props) => {
+                if (!authenticated) {
+                  return <Login
+                    {...props}
+                    exact
+                    loggingIn={loggingIn}
+                    user={user}
+                    userId={userId}
+                    roles={roles}
+                    authenticated={authenticated}
+                  />;
+                } else {
+                  return <Redirect to="/" />;
+                }
+              }}
+            />
+
+            <ProtectedRoute
+              authenticated={authenticated}
+              user={user}
+              userId={userId}
+              loggingIn={loggingIn}
+              roles={roles}
+              path="/dashboard"
+              exact
+              component={Dashboard}
+            />
+          </Switch>
         </div>
       </div>
     </div>
