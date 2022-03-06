@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Meteor } from "meteor/meteor";
 
-const Navbar = ({ authenticated}) => {
+const Navbar = ({ authenticated }) => {
   const logoutUser = () => {
     Meteor.logout(() => {});
   };
@@ -37,11 +37,19 @@ const Navbar = ({ authenticated}) => {
               </Link>
             </li>
             {authenticated ? (
-              <li className="nav-item" onClick={logoutUser}>
-                <Link to="#" className="nav-link">
-                  Log out
-                </Link>
-              </li>
+              <React.Fragment>
+                <li className="nav-item">
+                  <Link to="/dashboard" className="nav-link">
+                    Dashboard
+                  </Link>
+                </li>
+
+                <li className="nav-item" onClick={logoutUser}>
+                  <Link to="#" className="nav-link">
+                    Log out
+                  </Link>
+                </li>
+              </React.Fragment>
             ) : (
               <li className="nav-item">
                 <Link to="/login" className="nav-link">
