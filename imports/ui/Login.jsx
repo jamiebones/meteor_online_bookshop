@@ -14,10 +14,7 @@ const Login = ({ authenticated }) => {
       if (err) {
         alert(err.reason);
       } else {
-        console.log("login level", authenticated);
         alert("Login successful");
-        //setPassword("");
-        //setUsername("");
         history.push("/dashboard");
       }
     });

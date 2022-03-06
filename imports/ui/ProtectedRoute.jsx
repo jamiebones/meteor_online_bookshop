@@ -6,9 +6,7 @@ const ProtectedRoute = ({
   authenticated,
   ...restProps
 }) => {
-  {
-    console.log("authenticated is: ", authenticated);
-  }
+  
   return (
     <Route
       render={(props) =>

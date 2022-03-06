@@ -1,15 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-
-const isAdmin = (roles) => {
-  debugger;
-  for (let i = 0; i < roles.length; i++) {
-    if (roles[i].role._id === "admin") {
-      return true;
-    }
-  }
-  return false;
-};
+import { isAdmin } from "../utilities/utility";
 
 const Authorized = ({
   component: Component,

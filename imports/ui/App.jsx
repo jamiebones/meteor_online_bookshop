@@ -13,8 +13,7 @@ import ProtectedRoute from "./ProtectedRoute.jsx";
 import Dashboard from "./Dashboard.jsx";
 import Authorized from "./Authorized.jsx";
 import NotAuthorized from "./NotAuthorized.jsx";
-
-import "./app.css";
+import Navbar from "./Navbar.js";
 
 export const App = () => {
   const [user, setUser] = useState(null);
@@ -61,6 +60,7 @@ export const App = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-12">
+          <Navbar authenticated={authenticated} />
           <Switch>
             <Route path="/" exact component={BookShop} />
             <Route path="/sign-up" exact component={SignUp} />
@@ -71,15 +71,17 @@ export const App = () => {
               exact
               render={(props) => {
                 if (!authenticated) {
-                  return <Login
-                    {...props}
-                    exact
-                    loggingIn={loggingIn}
-                    user={user}
-                    userId={userId}
-                    roles={roles}
-                    authenticated={authenticated}
-                  />;
+                  return (
+                    <Login
+                      {...props}
+                      exact
+                      loggingIn={loggingIn}
+                      user={user}
+                      userId={userId}
+                      roles={roles}
+                      authenticated={authenticated}
+                    />
+                  );
                 } else {
                   return <Redirect to="/" />;
                 }
