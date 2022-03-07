@@ -13,7 +13,9 @@ import ProtectedRoute from "./ProtectedRoute.jsx";
 import Dashboard from "./Dashboard.jsx";
 import Authorized from "./Authorized.jsx";
 import NotAuthorized from "./NotAuthorized.jsx";
+import AdminDashboard from "./AdminDashboard.jsx";
 import Navbar from "./Navbar.js";
+import "./app.css";
 
 export const App = () => {
   const [user, setUser] = useState(null);
@@ -65,6 +67,8 @@ export const App = () => {
             <Route path="/" exact component={BookShop} />
             <Route path="/sign-up" exact component={SignUp} />
             <Route path="/not_authorized" exact component={NotAuthorized} />
+
+            <Route path="/admin" exact component={AdminDashboard} />
 
             <Route
               path="/login"

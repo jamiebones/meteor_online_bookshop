@@ -1,0 +1,13 @@
+.author-label{
+    font-size: 14px;
+    color: #281212;
+    font-weight: bold;
+    padding: 5px 5px;
+    margin: 2px;
+    background: #c0c0c0;
+}
+
+.author-label span {
+    padding: 2px;
+    cursor: pointer;
+}
