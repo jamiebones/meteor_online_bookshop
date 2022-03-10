@@ -18,33 +18,24 @@ import Navbar from "./Navbar.js";
 import "./app.css";
 
 export const App = () => {
-  const [user, setUser] = useState(null);
-  const { userId, roles, loggingIn, authenticated } = useTracker(() => {
+  const [authenticated, setAuthenticated] = useState(false);
+
+  const { user, roles } = useTracker(() => {
     const userId = Meteor.userId();
-    const roles = Meteor.roleAssignment
-      .find({ "user._id": Meteor.userId() })
-      .fetch();
-    const authenticated = !!userId;
-    const loggingIn = Meteor.loggingIn();
-    return { userId, roles, authenticated, loggingIn };
-  }, [user]);
-
-  const handleLoginFunction = () => {
-    setUser(Meteor.user());
-  };
-
-  const handleLogoutFunction = () => {
-    setUser(Meteor.user());
-  };
+    const roles = Meteor.roleAssignment.find({ "user._id": userId }).fetch();
+    const user = Meteor.user();
+    return { user, roles };
+  });
 
   useEffect(() => {
-    Accounts.onLogin(() => {
-      handleLoginFunction();
-    });
-    Accounts.onLogout(() => {
-      handleLogoutFunction();
-    });
+    if (user) {
+      setAuthenticated(true);
+    } else {
+      setAuthenticated(false);
+    }
+  });
 
+  useEffect(() => {
     const url = window.location.pathname;
     let verificationToken = url.split("/")[2];
     if (verificationToken) {
@@ -62,46 +53,44 @@ export const App = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-12">
-          <Navbar authenticated={authenticated} />
+          <Navbar authenticated={authenticated} roles={roles} />
           <Switch>
-            <Route path="/" exact component={BookShop} />
-            <Route path="/sign-up" exact component={SignUp} />
-            <Route path="/not_authorized" exact component={NotAuthorized} />
+            <Route path="/" exact>
+              <BookShop />
+            </Route>
 
-            <Route path="/admin" exact component={AdminDashboard} />
+            <Route path="/sign-up" exact>
+              <SignUp />
+            </Route>
 
-            <Route
-              path="/login"
+            <Route path="/not_authorized" exact>
+              <NotAuthorized />
+            </Route>
+
+            <Route path="/login" exact>
+              <Login user={user} roles={roles} authenticated={authenticated} />
+            </Route>
+
+            <ProtectedRoute path="/dashboard" authenticated={authenticated}>
+              <Dashboard
+                authenticated={authenticated}
+                roles={roles}
+                user={user}
+              />
+            </ProtectedRoute>
+
+            <Authorized
               exact
-              render={(props) => {
-                if (!authenticated) {
-                  return (
-                    <Login
-                      {...props}
-                      exact
-                      loggingIn={loggingIn}
-                      user={user}
-                      userId={userId}
-                      roles={roles}
-                      authenticated={authenticated}
-                    />
-                  );
-                } else {
-                  return <Redirect to="/" />;
-                }
-              }}
-            />
-
-            <ProtectedRoute
+              path="/admin"
               authenticated={authenticated}
-              user={user}
-              userId={userId}
-              loggingIn={loggingIn}
               roles={roles}
-              path="/dashboard"
-              exact
-              component={Dashboard}
-            />
+            >
+              <AdminDashboard
+                authenticated={authenticated}
+                user={user}
+                roles={roles}
+              />
+            </Authorized>
           </Switch>
         </div>
       </div>

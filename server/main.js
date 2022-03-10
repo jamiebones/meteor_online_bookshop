@@ -2,11 +2,10 @@ import "../imports/startup/server";
 
 import { Accounts } from "meteor/accounts-base";
 import { Meteor } from "meteor/meteor";
-import{Roles} from "meteor/alanning:roles";
-
+import { Roles } from "meteor/alanning:roles";
 
 Meteor.startup(() => {
-     // code to run on server at startup
+  // code to run on server at startup
   const users = [
     {
       name: "Normal User",
@@ -38,6 +37,4 @@ Meteor.startup(() => {
       }
     }
   });
-
 });
-

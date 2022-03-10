@@ -20,11 +20,11 @@ const Dashboard = ({ user, authenticated, ...rest }) => {
             <div className="card">
               <img
                 src="https://via.placeholder.com/90x50"
-                class="card-img-top"
+                className="card-img-top"
                 alt="..."
               />
               <div className="card-body">
-                <h5 class="card-title text-center">Mastering Javascript</h5>
+                <h5 className="card-title text-center">Mastering Javascript</h5>
 
                 <p className="card-text d-flex flex-column">
                   <span className="mb-1">
@@ -54,11 +54,11 @@ const Dashboard = ({ user, authenticated, ...rest }) => {
             <div className="card">
               <img
                 src="https://via.placeholder.com/90x50"
-                class="card-img-top"
+                className="card-img-top"
                 alt="..."
               />
               <div className="card-body">
-                <h5 class="card-title text-center">The Client</h5>
+                <h5 className="card-title text-center">The Client</h5>
 
                 <p className="card-text d-flex flex-column">
                   <span className="mb-1">

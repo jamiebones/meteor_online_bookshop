@@ -1,23 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Meteor } from "meteor/meteor";
 import { useHistory } from "react-router-dom";
+import { isAdmin } from "../utilities/utility";
 
-const Login = ({ authenticated }) => {
+const Login = ({ authenticated, roles }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  
   let history = useHistory();
 
-  const loginUser = (e) => {
-    e.preventDefault();
-    Meteor.loginWithPassword(email.trim(), password, (err) => {
-      if (err) {
-        alert(err.reason);
+  useEffect(() => {
+    if (authenticated) {
+      if (isAdmin(roles)) {
+        history.push("/admin");
       } else {
-        alert("Login successful");
         history.push("/dashboard");
       }
-    });
+    }
+  }, [authenticated]);
+
+  const loginUser = async (e) => {
+    e.preventDefault();
+    Meteor.loginWithPassword(
+      username ? username : email.trim(),
+      password,
+      (err) => {
+        if (err) {
+          alert(err.reason);
+        } else {
+          alert("Login successful");
+        }
+      }
+    );
   };
 
   return (

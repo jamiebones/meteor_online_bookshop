@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Meteor } from "meteor/meteor";
+import { isAdmin } from "../utilities/utility";
 
-const Navbar = ({ authenticated }) => {
+const Navbar = ({ authenticated, roles }) => {
   const logoutUser = () => {
     Meteor.logout(() => {});
   };
@@ -38,11 +39,19 @@ const Navbar = ({ authenticated }) => {
             </li>
             {authenticated ? (
               <React.Fragment>
-                <li className="nav-item">
-                  <Link to="/dashboard" className="nav-link">
-                    Dashboard
-                  </Link>
-                </li>
+                {isAdmin(roles) ? (
+                  <li className="nav-item">
+                    <Link to="/admin" className="nav-link">
+                      Admin Dashboard
+                    </Link>
+                  </li>
+                ) : (
+                  <li className="nav-item">
+                    <Link to="/dashboard" className="nav-link">
+                      Dashboard
+                    </Link>
+                  </li>
+                )}
 
                 <li className="nav-item" onClick={logoutUser}>
                   <Link to="#" className="nav-link">

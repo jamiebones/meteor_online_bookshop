@@ -18,7 +18,7 @@ const AddAuthor = () => {
         <label className="form-label">Phone</label>
         <div className="input-group mb-3">
           <input type="number" className="form-control" />
-          <span class="input-group-text">+</span>
+          <span className="input-group-text">+</span>
         </div>
 
         <div className="mb-3">
