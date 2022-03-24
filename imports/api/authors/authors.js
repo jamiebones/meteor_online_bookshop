@@ -1,15 +1,15 @@
 import { Mongo } from "meteor/mongo";
 import SimpleSchema from "simpl-schema";
 
-const AuthorCollection = new Mongo.Collection("authors");
+const AuthorsCollection = new Mongo.Collection("authors");
 
-AuthorCollection.allow({
+AuthorsCollection.allow({
   insert: () => false,
   update: () => false,
   remove: () => false,
 });
 
-AuthorCollection.deny({
+AuthorsCollection.deny({
   insert: () => true,
   update: () => true,
   remove: () => true,
@@ -49,5 +49,5 @@ const AuthorsSchema = new SimpleSchema({
   },
 });
 
-AuthorCollection.attachSchema(AuthorsSchema);
-export default AuthorCollection;
+AuthorsCollection.attachSchema(AuthorsSchema);
+export default AuthorsCollection;
