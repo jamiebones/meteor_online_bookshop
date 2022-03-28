@@ -160,17 +160,17 @@ const AddBook = () => {
             onChange={handleTextInputChange}
           />
         </div>
-        <div className="authors-div">
-          {loading && (
-            <p className="text-center lead">list loading....</p>
-          )}
 
-          {authors && authors.length > 0 && (
-            <p>click on the author's name to select it</p>
-          )}
-          {authors &&
-            authors.length > 0 &&
-            authors.map((author) => {
+        {authors.length > 0 && (
+          <div className="authors-div">
+            {loading ? (
+              <p className="text-center lead">list loading....</p>
+            ) : null}
+
+            {authors.length > 0 && (
+              <p>click on the author's name to select it</p>
+            )}
+            {authors.map((author) => {
               return (
                 <p
                   key={author._id}
@@ -182,7 +182,12 @@ const AddBook = () => {
                 </p>
               );
             })}
-        </div>
+          </div>
+        )}
+
+        {authorFirstName.length > 2 && authors.length === 0 && (
+          <p className="lead text-primary">No data</p>
+        )}
 
         <div className="selected-authors-div">
           {selectedAuthors && selectedAuthors.length > 0 && (
