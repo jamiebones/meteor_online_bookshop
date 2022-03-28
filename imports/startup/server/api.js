@@ -9,3 +9,5 @@ import "../../api/authors/server/publications";
 
 import "../../api/bookSales/methods";
 import "../../api/bookSales/server/publications";
+
+import "../../api/files/files";

@@ -24,3 +24,20 @@
 .remove{
     cursor: pointer;
 }
+
+.authors-div{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.select-author{
+    padding: 5px;
+    background-color: #c0c0c0;
+    width: 100%;
+    cursor: pointer;
+}
+
+.author-div{
+    background-color: #e0d4d0;
+    padding: 10px;
+}

@@ -1,5 +1,6 @@
 import { Mongo } from "meteor/mongo";
 import SimpleSchema from "simpl-schema";
+import { Meteor } from "meteor/meteor";
 
 const AuthorsCollection = new Mongo.Collection("authors");
 
@@ -14,6 +15,10 @@ AuthorsCollection.deny({
   update: () => true,
   remove: () => true,
 });
+
+if (Meteor.isServer) {
+  AuthorsCollection.createIndex({ firstname: 1 });
+}
 
 const AuthorsSchema = new SimpleSchema({
   firstname: {
