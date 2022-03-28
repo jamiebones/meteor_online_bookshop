@@ -28,6 +28,8 @@
 .authors-div{
     display: flex;
     flex-wrap: wrap;
+    background-color: #c5d7a9;
+    padding: 10px;
 }
 
 .select-author{

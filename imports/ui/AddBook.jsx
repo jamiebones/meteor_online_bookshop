@@ -7,7 +7,7 @@ import AuthorCollection from "../api/authors/authors";
 import UploadComponent from "./UploadComponent";
 
 const searchFirstNameFunction = (collection, searchTerm) =>
-  new Promise((resolve, reject) =>
+  new Promise((resolve) =>
     setTimeout(() => {
       resolve(collection.find({ firstname: searchTerm }).fetch());
     }, 100)
@@ -21,7 +21,6 @@ const AddBook = () => {
   const [bookPrice, setBookPrice] = useState("");
   const [bookDetailsSave, setBookDetailsSave] = useState(false);
   const [bookDetails, setBookDetails] = useState(null);
-  const [searching, setSearching] = useState(false);
   const [authors, setAuthors] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -38,15 +37,10 @@ const AddBook = () => {
     }
   }, [authorFirstName]);
 
- 
-
   const handleTextInputChange = (e) => {
     const { name, value } = e.target;
     switch (name) {
       case "authorFirstName":
-        if (value.length > 1) {
-          setSearching(true);
-        }
         setAuthorFirstName(value);
         break;
       case "bookTitle":
@@ -123,7 +117,6 @@ const AddBook = () => {
       setAuthorFirstName("");
       return [...filterAuthors, author];
     });
-    setSearching(false);
   };
 
   const removeSelectedAuthor = (author) => {
@@ -168,25 +161,27 @@ const AddBook = () => {
           />
         </div>
         <div className="authors-div">
-          {loading && <p>author's list loading....</p>}
+          {loading && (
+            <p className="text-center lead">list loading....</p>
+          )}
 
           {authors && authors.length > 0 && (
             <p>click on the author's name to select it</p>
           )}
-          {authors && authors.length > 0
-            ? authors.map((author) => {
-                return (
-                  <p
-                    key={author._id}
-                    className="select-author"
-                    onClick={() => handleAuthorSelect(author)}
-                  >
-                    {author.firstname} &nbsp;
-                    {author.surname}
-                  </p>
-                );
-              })
-            : searching && <p>No author found with that name</p>}
+          {authors &&
+            authors.length > 0 &&
+            authors.map((author) => {
+              return (
+                <p
+                  key={author._id}
+                  className="select-author"
+                  onClick={() => handleAuthorSelect(author)}
+                >
+                  {author.firstname} &nbsp;
+                  {author.surname}
+                </p>
+              );
+            })}
         </div>
 
         <div className="selected-authors-div">
