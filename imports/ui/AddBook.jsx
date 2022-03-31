@@ -61,7 +61,7 @@ const AddBook = () => {
     let authors = selectedAuthors.map((a) => {
       let author = {
         authorId: a._id,
-        name: `${a.firstname} ${a.lastname}`,
+        name: `${a.firstname} ${a.surname}`,
       };
       return author;
     });
