@@ -29,7 +29,7 @@ const BookShop = () => {
                       <img
                         src={`data:image/png;base64, ${book.coverImage}`}
                         className="card-img-top"
-                        alt="..."
+                        alt={`image for ${book.title}`}
                       />
                       <div className="card-body">
                         <h5 className="card-title text-center">
