@@ -2,8 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Meteor } from "meteor/meteor";
 import { isAdmin } from "../utilities/utility";
+import { useCart } from "../context/ShoppingContext";
 
 const Navbar = ({ authenticated, roles }) => {
+  const { cart } = useCart();
   const logoutUser = () => {
     Meteor.logout(() => {});
   };
@@ -66,6 +68,12 @@ const Navbar = ({ authenticated, roles }) => {
                 </Link>
               </li>
             )}
+            <li className="nav-item pull-right">
+              <Link to="/display_cart" className="nav-link">
+                Cart <i className="fas fa-cart-arrow-down"></i>
+                {cart.length > 0 ? cart.length : ""}
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Meteor } from "meteor/meteor";
 import { useTracker } from "meteor/react-meteor-data";
 import BooksCollection from "../api/books/books";
+import { useCart } from "../context/ShoppingContext";
 
 const BookShop = () => {
+  const { cart, setCart } = useCart();
+
   const { books, loading } = useTracker(() => {
     const handle = Meteor.subscribe("books.allBooks");
     return {
@@ -12,11 +15,28 @@ const BookShop = () => {
     };
   });
 
+  const addItemToCart = (item) => {
+    //check if the item is already in the cart
+    const isInCart = cart.find((cartItem) => cartItem._id === item._id);
+    if (isInCart) {
+      //if it is, increase the quantity
+      setCart((prevCart) =>
+        prevCart.map((cartItem) =>
+          cartItem._id === item._id
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem
+        )
+      );
+    } else {
+      //if it is not, add it to the cart
+      setCart((prevCart) => [...prevCart, { ...item, quantity: 1 }]);
+    }
+  };
+
   return (
     <div className="row">
       <div className="col-md-8 offset-md-2">
         <h1>Welcome to the online Bookshop</h1>
-        {console.log("books", books)}
         <div className="row">
           {loading && <div className="loading-books">Loading...</div>}
 
@@ -59,7 +79,6 @@ const BookShop = () => {
 
                         <p className="d-flex">
                           <i className="mb-1">Price:</i> &nbsp;
-
                           <span className="text-danger">${book.price}</span>
                         </p>
 
@@ -68,7 +87,11 @@ const BookShop = () => {
                           role="group"
                           aria-label="Basic mixed styles example"
                         >
-                          <button type="button" className="btn btn-warning">
+                          <button
+                            type="button"
+                            className="btn btn-warning"
+                            onClick={() => addItemToCart(book)}
+                          >
                             Add to cart
                           </button>
                           <button type="button" className="btn btn-success">

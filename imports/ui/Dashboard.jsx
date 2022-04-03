@@ -1,6 +1,8 @@
 import React from "react";
 
+
 const Dashboard = ({ user, authenticated, ...rest }) => {
+ 
   return (
     <div className="row">
       <div className="col-md-8 offset-md-2">

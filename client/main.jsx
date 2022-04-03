@@ -4,12 +4,15 @@ import { render } from "react-dom";
 import { App } from "/imports/ui/App.jsx";
 
 import "bootstrap/dist/css/bootstrap.css";
-import { BrowserRouter, Switch } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
+import { ShoppingProvider } from "../imports/context/ShoppingContext.jsx";
 
 Meteor.startup(() => {
   render(
     <BrowserRouter>
-      <App />
+      <ShoppingProvider>
+        <App />
+      </ShoppingProvider>
     </BrowserRouter>,
 
     document.getElementById("react-target")

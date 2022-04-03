@@ -15,6 +15,7 @@ import Authorized from "./Authorized.jsx";
 import NotAuthorized from "./NotAuthorized.jsx";
 import AdminDashboard from "./AdminDashboard.jsx";
 import Navbar from "./Navbar.js";
+import ShoppingCart from "./ShoppingCart.jsx";
 import "./app.css";
 
 export const App = () => {
@@ -57,6 +58,10 @@ export const App = () => {
           <Switch>
             <Route path="/" exact>
               <BookShop />
+            </Route>
+
+            <Route path="/display_cart">
+               <ShoppingCart />
             </Route>
 
             <Route path="/sign-up" exact>
