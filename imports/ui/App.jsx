@@ -16,6 +16,7 @@ import NotAuthorized from "./NotAuthorized.jsx";
 import AdminDashboard from "./AdminDashboard.jsx";
 import Navbar from "./Navbar.js";
 import ShoppingCart from "./ShoppingCart.jsx";
+import { ShoppingProvider } from "../context/ShoppingContext.jsx";
 import "./app.css";
 
 export const App = () => {
@@ -54,49 +55,55 @@ export const App = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-12">
-          <Navbar authenticated={authenticated} roles={roles} />
-          <Switch>
-            <Route path="/" exact>
-              <BookShop />
-            </Route>
+          <ShoppingCart>
+            <Navbar authenticated={authenticated} roles={roles} />
+            <Switch>
+              <Route path="/" exact>
+                <BookShop />
+              </Route>
 
-            <Route path="/display_cart">
-               <ShoppingCart />
-            </Route>
+              <Route path="/display_cart">
+                <ShoppingCart />
+              </Route>
 
-            <Route path="/sign-up" exact>
-              <SignUp />
-            </Route>
+              <Route path="/sign-up" exact>
+                <SignUp />
+              </Route>
 
-            <Route path="/not_authorized" exact>
-              <NotAuthorized />
-            </Route>
+              <Route path="/not_authorized" exact>
+                <NotAuthorized />
+              </Route>
 
-            <Route path="/login" exact>
-              <Login user={user} roles={roles} authenticated={authenticated} />
-            </Route>
+              <Route path="/login" exact>
+                <Login
+                  user={user}
+                  roles={roles}
+                  authenticated={authenticated}
+                />
+              </Route>
 
-            <ProtectedRoute path="/dashboard" authenticated={authenticated}>
-              <Dashboard
+              <ProtectedRoute path="/dashboard" authenticated={authenticated}>
+                <Dashboard
+                  authenticated={authenticated}
+                  roles={roles}
+                  user={user}
+                />
+              </ProtectedRoute>
+
+              <Authorized
+                exact
+                path="/admin"
                 authenticated={authenticated}
                 roles={roles}
-                user={user}
-              />
-            </ProtectedRoute>
-
-            <Authorized
-              exact
-              path="/admin"
-              authenticated={authenticated}
-              roles={roles}
-            >
-              <AdminDashboard
-                authenticated={authenticated}
-                user={user}
-                roles={roles}
-              />
-            </Authorized>
-          </Switch>
+              >
+                <AdminDashboard
+                  authenticated={authenticated}
+                  user={user}
+                  roles={roles}
+                />
+              </Authorized>
+            </Switch>
+          </ShoppingCart>
         </div>
       </div>
     </div>

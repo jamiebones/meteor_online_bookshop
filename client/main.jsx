@@ -5,7 +5,7 @@ import { App } from "/imports/ui/App.jsx";
 
 import "bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter } from "react-router-dom";
-import { ShoppingProvider } from "../imports/context/ShoppingContext.jsx";
+
 
 Meteor.startup(() => {
   render(
