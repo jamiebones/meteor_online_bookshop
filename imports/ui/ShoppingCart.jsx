@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/ShoppingContext";
+import { useHistory } from "react-router-dom";
 
 const sumItems = (cart) => {
   return cart.reduce((acc, item) => acc + item.quantity * item.price, 0);
@@ -8,6 +9,7 @@ const sumItems = (cart) => {
 
 const ShoppingCart = () => {
   const { cart, setCart } = useCart();
+  const history = useHistory();
 
   const removeItemFromCart = (itemId) => {
     setCart((prevCart) =>
@@ -38,12 +40,14 @@ const ShoppingCart = () => {
     );
   };
 
+
   return (
     <div>
       <section className="h-100 h-custom">
         <div className="container py-5 h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col-12">
+    
               <div
                 className="card card-registration card-registration-2"
                 style={{ borderRadius: 15 + "px" }}
@@ -61,7 +65,11 @@ const ShoppingCart = () => {
                           </h6>
                         </div>
 
-                        {cart.length === 0 && <p className="lead text-primary">No items in your cart</p>}
+                        {cart.length === 0 && (
+                          <p className="lead text-primary">
+                            No items in your cart
+                          </p>
+                        )}
 
                         {cart.map(
                           ({
@@ -75,8 +83,10 @@ const ShoppingCart = () => {
                             return (
                               <React.Fragment key={_id}>
                                 <hr className="my-4" />
-                                <div className="row mb-4 d-flex justify-content-between 
-                                align-items-center">
+                                <div
+                                  className="row mb-4 d-flex justify-content-between 
+                                align-items-center"
+                                >
                                   <div className="col-md-3 col-lg-3 col-xl-3">
                                     <img
                                       className="img-fluid rounded-3"
@@ -110,6 +120,7 @@ const ShoppingCart = () => {
                                       min="0"
                                       name="quantity"
                                       value={quantity}
+                                      readOnly
                                       type="number"
                                       className="form-control form-control-sm"
                                     />
@@ -185,8 +196,10 @@ const ShoppingCart = () => {
                               type="button"
                               className="btn btn-dark btn-block btn-lg"
                               data-mdb-ripple-color="dark"
+                              onClick={()=>history.push("/init_payment")}
+                          
                             >
-                              Checkout
+                             Checkout
                             </button>
                           </React.Fragment>
                         )}

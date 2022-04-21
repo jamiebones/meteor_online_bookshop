@@ -5,7 +5,11 @@
      "password" : "blazing147",
      "smtpServer" : "smtp.gmail.com",
      "smtpPort" : "587"
-    }
+    },
+    "stripe_secret": "sk_test_YDz7O9IV3yYrIEk6OJtkjEmN"
+ },
+ "public": {
+   "stripe_publishable": "pk_test_Tg0wlgaNhDarQuehPQvLJ6sl"
  }
 
 }

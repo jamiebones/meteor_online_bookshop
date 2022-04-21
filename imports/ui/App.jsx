@@ -16,7 +16,14 @@ import NotAuthorized from "./NotAuthorized.jsx";
 import AdminDashboard from "./AdminDashboard.jsx";
 import Navbar from "./Navbar.js";
 import ShoppingCart from "./ShoppingCart.jsx";
+import MakePayment from "./MakePayment.js";
+import InitPayment from "./InitPayment.jsx";
 import { ShoppingProvider } from "../context/ShoppingContext.jsx";
+import { StripeProvider, useStripeContext } from "../context/StripeContext.jsx";
+
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe(Meteor.settings.public.stripe_publishable);
 import "./app.css";
 
 export const App = () => {
@@ -51,19 +58,40 @@ export const App = () => {
     }
   }, []);
 
+  const { clientSecret } = useStripeContext();
+  let clientSecretFromStorage;
+  if (!clientSecret) {
+    //get it from the localstorage
+    clientSecretFromStorage = localStorage.getItem("client_secret");
+  }
+
+  const options = {
+    clientSecret: clientSecret ? clientSecret : clientSecretFromStorage,
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-12">
-          <ShoppingCart>
+          <ShoppingProvider>
             <Navbar authenticated={authenticated} roles={roles} />
             <Switch>
               <Route path="/" exact>
                 <BookShop />
               </Route>
 
+              <Route path="/make_payment" exact>
+                <Elements stripe={stripePromise} options={options}>
+                  <MakePayment user={user} authenticated={authenticated} />
+                </Elements>
+              </Route>
+
               <Route path="/display_cart">
                 <ShoppingCart />
+              </Route>
+
+              <Route path="/init_payment">
+                <InitPayment user={user} authenticated={authenticated}/>
               </Route>
 
               <Route path="/sign-up" exact>
@@ -103,7 +131,7 @@ export const App = () => {
                 />
               </Authorized>
             </Switch>
-          </ShoppingCart>
+          </ShoppingProvider>
         </div>
       </div>
     </div>

@@ -5,15 +5,15 @@ import { App } from "/imports/ui/App.jsx";
 
 import "bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter } from "react-router-dom";
-
+import { StripeProvider } from "../imports/context/StripeContext.jsx";
 
 Meteor.startup(() => {
   render(
-    <BrowserRouter>
-      <ShoppingProvider>
+    <StripeProvider>
+      <BrowserRouter>
         <App />
-      </ShoppingProvider>
-    </BrowserRouter>,
+      </BrowserRouter>
+    </StripeProvider>,
 
     document.getElementById("react-target")
   );

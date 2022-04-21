@@ -1,5 +1,5 @@
 import { Mongo } from "meteor/mongo";
-import { SimpleSchema } from "simpl-schema";
+import SimpleSchema from "simpl-schema";
 
 const BookSalesCollection = new Mongo.Collection("booksales");
 BookSalesCollection.allow({
@@ -15,16 +15,10 @@ BookSalesCollection.deny({
 });
 
 const BookSalesSchema = new SimpleSchema({
-  buyer: {
-    name: String,
-    email: String,
-    phone: {
-      type: String,
-      required: false,
-    },
-  },
-  dateofPurchase: Date,
-  orderId: String,
+  buyer: Object,
+  "buyer.name": String,
+  "buyer.email": String,
+  dateOfPurchase: Date,
   booksBought: {
     type: Array,
     label: "Books bought",
@@ -41,11 +35,23 @@ const BookSalesSchema = new SimpleSchema({
   "booksBought.$.price": {
     type: Number,
   },
-  purchaseCompleted: {
-    type: Boolean,
-    defaultValue: false,
-  }
-  
+  "booksBought.$.quantity": {
+    type: Number,
+  },
+  totalSum: Number,
+  paymentStatus: {
+    type: String,
+    allowedValues: [
+      "success",
+      "processing",
+      "not successful",
+      "payment initiated",
+    ],
+  },
+  paymentIntent: {
+    type: String,
+    required: false,
+  },
 });
 
 BookSalesCollection.attachSchema(BookSalesSchema);
