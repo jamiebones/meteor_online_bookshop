@@ -40,17 +40,23 @@ const BookShop = () => {
         <div className="row">
           {loading && <div className="loading-books">Loading...</div>}
 
+          {console.log("books", books)}
+
           {books &&
             books.map((book) => {
               return (
                 <div className="col-md-3" key={book._id}>
                   <div className="book-card">
                     <div className="card">
-                      <img
-                        src={`data:image/png;base64, ${book.coverImage}`}
-                        className="card-img-top"
-                        alt={`image for ${book.title}`}
-                      />
+                      {book.bookurl == "not set" ? (
+                        <p>No cover</p>
+                      ) : (
+                        <img
+                          src={`data:image/png;base64, ${book.coverImage}`}
+                          className="card-img-top"
+                          alt={`image for ${book.title}`}
+                        />
+                      )}
                       <div className="card-body">
                         <h5 className="card-title text-center">
                           {book.title.toUpperCase()}

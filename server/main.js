@@ -4,6 +4,7 @@ import { Accounts } from "meteor/accounts-base";
 import { Meteor } from "meteor/meteor";
 import { Roles } from "meteor/alanning:roles";
 import AuthorsCollection from "../imports/api/authors/authors";
+import BooksCollection from "../imports/api/books/books";
 
 Meteor.startup(() => {
   // code to run on server at startup
@@ -45,10 +46,11 @@ Meteor.startup(() => {
       emailAddress: "samson@oscar.com",
     },
   ];
-
+  let authorIds = [];
   if ( AuthorsCollection.find().count() === 0 ) {
     authors.forEach( (author) => {
-      AuthorsCollection.insert(author);
+      let authorId = AuthorsCollection.insert(author);
+      authorIds.push(authorId);
     });
   }
 
@@ -70,4 +72,42 @@ Meteor.startup(() => {
       }
     }
   });
+
+  //create somebooks in the system
+ const books = [
+    {
+     title: "Book 1",
+     description: "Book one description",
+     authors: [
+       {
+         authorId: authorIds[0],
+         name: "forest Whitstone",
+       }
+     ],
+     coverImage: "https://drive.google.com/file/d/1vr7pYGABzhsQ2eFyw3Odv0tOy6mE8TH0/view",
+     price: 20,
+     bookurl: "not set"
+    },
+
+    {
+      title: "Book 2",
+     description: "Book two description",
+     authors: [
+       {
+         authorId: authorIds[2],
+         name: "franka bell",
+       }
+     ],
+     coverImage: "https://drive.google.com/file/d/1EpDTHjOc8FOSZvFJDFA90sXQEulIWYu2/view",
+     price: 15,
+     bookurl: "not set"
+    }
+ ]
+
+ if ( BooksCollection.find().count() === 0 ) {
+    books.forEach( (book) => {
+      BooksCollection.insert(book);
+    });
+  }
+
 });
