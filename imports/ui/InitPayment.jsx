@@ -26,7 +26,7 @@ const InitPayment = ({ authenticated, user }) => {
       let buyerDetails = {};
       if (authenticated) {
         buyerDetails.buyer = {
-          email: user.emails[0].address,
+          email: user?.emails[0]?.address || "jamiebones147@gmail.com",
           name: user.username,
         };
       } else {

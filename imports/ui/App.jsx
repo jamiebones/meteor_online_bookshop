@@ -18,6 +18,7 @@ import Navbar from "./Navbar.js";
 import ShoppingCart from "./ShoppingCart.jsx";
 import MakePayment from "./MakePayment.js";
 import InitPayment from "./InitPayment.jsx";
+import CheckPaymentStatus from "./CheckPaymentStatus";
 import { ShoppingProvider } from "../context/ShoppingContext.jsx";
 import { StripeProvider, useStripeContext } from "../context/StripeContext.jsx";
 
@@ -83,6 +84,12 @@ export const App = () => {
               <Route path="/make_payment" exact>
                 <Elements stripe={stripePromise} options={options}>
                   <MakePayment user={user} authenticated={authenticated} />
+                </Elements>
+              </Route>
+
+              <Route path="/complete" exact>
+                <Elements stripe={stripePromise} options={options}>
+                  <CheckPaymentStatus />
                 </Elements>
               </Route>
 
