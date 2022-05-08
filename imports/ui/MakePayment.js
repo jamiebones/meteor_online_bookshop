@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
     useStripe,
     useElements,
@@ -7,8 +7,6 @@ import {
   import { Meteor } from "meteor/meteor"
 
 const MakePayment = () => {
-  const [customerEmail, setCustomerEmail] = useState("");
-  const [customerName, setCustomerName] = useState("");
   const stripe = useStripe();
   const elements = useElements();
 
