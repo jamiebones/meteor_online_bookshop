@@ -46,7 +46,7 @@ export default CheckPaymentStatus = () => {
       }
       //delete the client secret from local storage
       //localStorage.removeItem("client_secret");
-      //Meteor.call("updatePaymentStatus", status, paymentIntent.id);
+      Meteor.call("stripe.completePayment", status, clientSecret);
     
   }
 
@@ -58,6 +58,7 @@ export default CheckPaymentStatus = () => {
 
   return (
     <div>
+        {loading && <h1>Loading......</h1>}
       <h1>{message}</h1>
     </div>
   );
