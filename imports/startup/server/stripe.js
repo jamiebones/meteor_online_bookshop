@@ -2,6 +2,9 @@ import { Meteor } from "meteor/meteor";
 import { check } from "meteor/check";
 import Stripe from "stripe";
 import BookSalesCollection from "../../api/bookSales/bookSales";
+import { ReceiptDetails } from "./receiptDetails";
+import templateToHtml from "./templateToHtml";
+import { Email } from "meteor/email";
 
 const stripe = Stripe(Meteor.settings.private.stripe_secret);
 
@@ -37,6 +40,19 @@ Meteor.methods({
   },
   "stripe.completePayment": (status, clientSecret) => {
     //get the sales with the paymentIntent client_secret
+    //send an email to the customer
+    const { booksBought, buyer, totalSum } = ReceiptDetails(clientSecret);
+    //compile the email template
+    Meteor.defer(() => {
+      const html = templateToHtml("sendReceipt", { booksBought, buyer, totalSum });
+      //send the email
+      Email.send({
+        to: buyer.email,
+        from: "Educative@educative.com",
+        subject: "Your purchase receipt",
+        html: html,
+      });
+    });
     return BookSalesCollection.update(
       { paymentIntent: clientSecret },
       { $set: { paymentStatus: status } }
