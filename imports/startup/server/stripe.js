@@ -44,7 +44,7 @@ Meteor.methods({
     const { booksBought, buyer, totalSum } = ReceiptDetails(clientSecret);
     //compile the email template
     Meteor.defer(() => {
-      const html = templateToHtml("sendReceipt", { booksBought, buyer, totalSum });
+      const html = templateToHtml("sendReceipt", { booksBought, totalSum });
       //send the email
       Email.send({
         to: buyer.email,

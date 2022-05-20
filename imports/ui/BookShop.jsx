@@ -49,7 +49,11 @@ const BookShop = () => {
                   <div className="book-card">
                     <div className="card">
                       {book.bookurl == "not set" ? (
-                        <p>No cover</p>
+                         <img
+                          src={book.coverImage}
+                          className="card-img-top"
+                          alt={`image for ${book.title}`}
+                        />
                       ) : (
                         <img
                           src={`data:image/png;base64, ${book.coverImage}`}
@@ -100,9 +104,7 @@ const BookShop = () => {
                           >
                             Add to cart
                           </button>
-                          <button type="button" className="btn btn-success">
-                            Buy now
-                          </button>
+                          
                         </div>
                       </div>
                     </div>

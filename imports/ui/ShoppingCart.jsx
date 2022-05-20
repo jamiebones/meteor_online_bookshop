@@ -79,6 +79,7 @@ const ShoppingCart = () => {
                             quantity,
                             title,
                             _id,
+                            bookurl
                           }) => {
                             return (
                               <React.Fragment key={_id}>
@@ -88,11 +89,20 @@ const ShoppingCart = () => {
                                 align-items-center"
                                 >
                                   <div className="col-md-3 col-lg-3 col-xl-3">
-                                    <img
+                                    { bookurl === "not set" ? (
+                                       <img
+                                      className="img-fluid rounded-3"
+                                      src={coverImage}
+                                      alt={`image for ${title}`}
+                                    />
+                                    ) : 
+                                       <img
                                       className="img-fluid rounded-3"
                                       src={`data:image/png;base64, ${coverImage}`}
                                       alt={`image for ${title}`}
                                     />
+                                    }
+          
                                     {authors.map((author) => {
                                       return (
                                         <p

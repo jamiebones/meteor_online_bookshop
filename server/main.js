@@ -84,7 +84,7 @@ Meteor.startup(() => {
          name: "forest Whitstone",
        }
      ],
-     coverImage: "https://drive.google.com/file/d/1vr7pYGABzhsQ2eFyw3Odv0tOy6mE8TH0/view",
+     coverImage: "https://via.placeholder.com/300x200.png?text=Book+Cover",
      price: 20,
      bookurl: "not set"
     },
@@ -98,7 +98,7 @@ Meteor.startup(() => {
          name: "franka bell",
        }
      ],
-     coverImage: "https://drive.google.com/file/d/1EpDTHjOc8FOSZvFJDFA90sXQEulIWYu2/view",
+     coverImage: "https://via.placeholder.com/300x200.png?text=Book+Cover",
      price: 15,
      bookurl: "not set"
     }
