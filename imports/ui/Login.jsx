@@ -2,34 +2,39 @@ import React, { useState, useEffect } from "react";
 import { Meteor } from "meteor/meteor";
 import { useHistory } from "react-router-dom";
 import { isAdmin } from "../utilities/utility";
+import { useAuth } from "../context/AuthContext"
 
 const Login = ({ authenticated, roles }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const { auth, setAuth } = useAuth();
   
   let history = useHistory();
 
   useEffect(() => {
-    if (authenticated) {
+    if (auth) {
       if (isAdmin(roles)) {
         history.push("/admin");
       } else {
         history.push("/dashboard");
       }
     }
-  }, [authenticated]);
+  }, [auth]);
 
   const loginUser = async (e) => {
     e.preventDefault();
+    const div = document.getElementById("message");
     Meteor.loginWithPassword(
       username ? username : email.trim(),
       password,
       (err) => {
         if (err) {
-          alert(err.reason);
+          div.innerHTML = err.reason;
+          setAuth(false);
         } else {
-          alert("Login successful");
+          div.innerHTML = "Login successful";
+          setAuth(true);
         }
       }
     );
@@ -41,6 +46,7 @@ const Login = ({ authenticated, roles }) => {
         <div className="col-md-6 offset-3">
           <div>
             <h1>Login</h1>
+            <div id="message"></div>
             <form onSubmit={loginUser}>
               <div className="mb-3">
                 <label className="form-label">

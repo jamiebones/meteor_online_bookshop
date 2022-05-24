@@ -1,9 +1,9 @@
 {
  "private" : {
     "EmailSetup": {
-     "username" : "educativecourse147",
-     "password" : "blazing147",
-     "smtpServer" : "smtp.gmail.com",
+     "username" : "9110bf1cc5ca35",
+     "password" : "546016ea430633",
+     "smtpServer" : "smtp.mailtrap.io",
      "smtpPort" : "587"
     },
     "stripe_secret": "sk_test_YDz7O9IV3yYrIEk6OJtkjEmN"

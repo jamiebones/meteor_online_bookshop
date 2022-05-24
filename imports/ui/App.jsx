@@ -21,6 +21,7 @@ import InitPayment from "./InitPayment.jsx";
 import CheckPaymentStatus from "./CheckPaymentStatus";
 import { ShoppingProvider } from "../context/ShoppingContext.jsx";
 import { StripeProvider, useStripeContext } from "../context/StripeContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -28,7 +29,7 @@ const stripePromise = loadStripe(Meteor.settings.public.stripe_publishable);
 import "./app.css";
 
 export const App = () => {
-  const [authenticated, setAuthenticated] = useState(false);
+  const { auth, setAuth } = useAuth();
 
   const { user, roles } = useTracker(() => {
     const userId = Meteor.userId();
@@ -39,9 +40,9 @@ export const App = () => {
 
   useEffect(() => {
     if (user) {
-      setAuthenticated(true);
+      setAuth(true);
     } else {
-      setAuthenticated(false);
+      setAuth(false);
     }
   });
 
@@ -75,7 +76,7 @@ export const App = () => {
       <div className="row">
         <div className="col-md-12">
           <ShoppingProvider>
-            <Navbar authenticated={authenticated} roles={roles} />
+            <Navbar authenticated={auth} roles={roles} />
             <Switch>
               <Route path="/" exact>
                 <BookShop />
@@ -83,7 +84,7 @@ export const App = () => {
 
               <Route path="/make_payment" exact>
                 <Elements stripe={stripePromise} options={options}>
-                  <MakePayment user={user} authenticated={authenticated} />
+                  <MakePayment user={user} authenticated={auth} />
                 </Elements>
               </Route>
 
@@ -98,7 +99,7 @@ export const App = () => {
               </Route>
 
               <Route path="/init_payment">
-                <InitPayment user={user} authenticated={authenticated}/>
+                <InitPayment user={user} authenticated={auth} />
               </Route>
 
               <Route path="/sign-up" exact>
@@ -113,13 +114,13 @@ export const App = () => {
                 <Login
                   user={user}
                   roles={roles}
-                  authenticated={authenticated}
+                  authenticated={auth}
                 />
               </Route>
 
-              <ProtectedRoute path="/dashboard" authenticated={authenticated}>
+              <ProtectedRoute path="/dashboard" authenticated={auth}>
                 <Dashboard
-                  authenticated={authenticated}
+                  authenticated={auth}
                   roles={roles}
                   user={user}
                 />
@@ -128,11 +129,11 @@ export const App = () => {
               <Authorized
                 exact
                 path="/admin"
-                authenticated={authenticated}
+                authenticated={auth}
                 roles={roles}
               >
                 <AdminDashboard
-                  authenticated={authenticated}
+                  authenticated={auth}
                   user={user}
                   roles={roles}
                 />

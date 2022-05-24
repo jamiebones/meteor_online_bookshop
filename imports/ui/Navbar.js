@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 import { Meteor } from "meteor/meteor";
 import { isAdmin } from "../utilities/utility";
 import { useCart } from "../context/ShoppingContext";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = ({ authenticated, roles }) => {
   const { cart } = useCart();
+  const { setAuth } = useAuth()
   const logoutUser = () => {
-    Meteor.logout(() => {});
+    Meteor.logout(() => {
+       setAuth(false);
+    });
   };
 
   return (

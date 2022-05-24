@@ -6,14 +6,17 @@ import { App } from "/imports/ui/App.jsx";
 import "bootstrap/dist/css/bootstrap.css";
 import { BrowserRouter } from "react-router-dom";
 import { StripeProvider } from "../imports/context/StripeContext.jsx";
+import { AuthProvider } from "../imports/context/AuthContext";
 
 Meteor.startup(() => {
   render(
-    <StripeProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </StripeProvider>,
+    <AuthProvider>
+      <StripeProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </StripeProvider>
+    </AuthProvider>,
 
     document.getElementById("react-target")
   );
