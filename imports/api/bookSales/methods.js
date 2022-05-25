@@ -27,6 +27,9 @@ Meteor.methods({
   },
   "bookSales.highestSelling": function () {
     const pipeline = [
+      {
+        $match: { paymentStatus: "success" },
+      },
       { $unwind: "$booksBought" },
 
       {
